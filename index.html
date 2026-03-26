@@ -75,6 +75,7 @@
   .kpi.warn .kpi-val { color: var(--orange); }
   .kpi.neu  .kpi-val { color: var(--blue); }
   .kpi-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; margin-top: 5px; }
+  .kpi-desc { font-size: 12px; color: var(--dim); margin-top: 4px; line-height: 1.4; }
   .kpi-foot {
     margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border);
     font-size: 11px; display: flex; gap: 6px; align-items: center;
@@ -291,21 +292,25 @@
     <div class="kpi warn">
       <div class="kpi-val">63,9%</div>
       <div class="kpi-label">FCR — 1º Contato</div>
+      <div class="kpi-desc">Escalações resolvidas sem nova transferência para outro atendente</div>
       <div class="kpi-foot"><span class="badge b-orange">Abaixo</span><span style="color:var(--dim)">Meta ≥ 75%</span></div>
     </div>
     <div class="kpi bad">
       <div class="kpi-val">15,4<span style="font-size:14px;font-weight:600"> min</span></div>
       <div class="kpi-label">FRT mediana</div>
+      <div class="kpi-desc">Tempo mediano até o cliente receber a primeira resposta humana no horário comercial</div>
       <div class="kpi-foot"><span class="badge b-red">Crítico</span><span style="color:var(--dim)">Meta &lt; 5 min</span></div>
     </div>
     <div class="kpi bad">
       <div class="kpi-val">25,8%</div>
       <div class="kpi-label">Resp. em até 5 min</div>
+      <div class="kpi-desc">Atendimentos no horário comercial respondidos dentro do prazo ideal</div>
       <div class="kpi-foot"><span class="badge b-red">Crítico</span><span style="color:var(--dim)">Meta ≥ 70%</span></div>
     </div>
     <div class="kpi neu">
       <div class="kpi-val">—</div>
       <div class="kpi-label">CSAT</div>
+      <div class="kpi-desc">Satisfação do cliente após o atendimento — ainda sem dados</div>
       <div class="kpi-foot"><span class="badge b-blue">Abr/2026</span></div>
     </div>
   </div>
@@ -357,15 +362,15 @@
   <div class="section-title">Qualidade conversacional do VnC — evolução jan → mar/2026</div>
 
   <div class="vnc-header">
-    Análise de <strong>21 conversas lidas integralmente</strong> (9 jan · 5 fev · 7 mar), todas de clientes que finalizaram o protocolo e receberam o empréstimo. Avaliação por 7 dimensões da rubrica de CX.
+    Análise de <strong>21 conversas lidas integralmente</strong> (7 por período), todas de clientes que finalizaram o protocolo e receberam o empréstimo. Avaliação por 7 dimensões da rubrica de CX — escala 1 a 10.
   </div>
 
   <table class="score-table">
     <thead>
       <tr>
         <th>Dimensão</th>
-        <th class="right">Jan (n=9)</th>
-        <th class="right">Fev (n=5)</th>
+        <th class="right">Jan (n=7)</th>
+        <th class="right">Fev (n=7)</th>
         <th class="right">Mar (n=7)</th>
         <th class="right">Δ Jan→Mar</th>
       </tr>
@@ -373,52 +378,52 @@
     <tbody>
       <tr>
         <td>Atendimento geral</td>
-        <td class="right"><span class="score-pill sp-mid">6.4</span></td>
-        <td class="right"><span class="score-pill sp-mid">7.6</span></td>
+        <td class="right"><span class="score-pill sp-mid">6.3</span></td>
+        <td class="right"><span class="score-pill sp-mid">7.7</span></td>
         <td class="right"><span class="score-pill sp-high">8.4</span></td>
-        <td class="right"><span class="delta-pos">+2.0 (+31%)</span></td>
+        <td class="right"><span class="delta-pos">+2.1</span></td>
       </tr>
       <tr>
         <td>Clareza</td>
-        <td class="right"><span class="score-pill sp-mid">6.6</span></td>
-        <td class="right"><span class="score-pill sp-mid">7.4</span></td>
+        <td class="right"><span class="score-pill sp-mid">6.4</span></td>
+        <td class="right"><span class="score-pill sp-mid">7.3</span></td>
         <td class="right"><span class="score-pill sp-high">8.1</span></td>
-        <td class="right"><span class="delta-pos">+1.5 (+23%)</span></td>
+        <td class="right"><span class="delta-pos">+1.7</span></td>
       </tr>
       <tr>
         <td>Fluidez</td>
-        <td class="right"><span class="score-pill sp-mid">5.8</span></td>
-        <td class="right"><span class="score-pill sp-mid">6.6</span></td>
+        <td class="right"><span class="score-pill sp-mid">5.7</span></td>
+        <td class="right"><span class="score-pill sp-mid">6.7</span></td>
         <td class="right"><span class="score-pill sp-high">8.0</span></td>
-        <td class="right"><span class="delta-pos">+2.2 (+38%)</span></td>
+        <td class="right"><span class="delta-pos">+2.3</span></td>
       </tr>
       <tr>
         <td>Acolhedora</td>
         <td class="right"><span class="score-pill sp-mid">6.9</span></td>
-        <td class="right"><span class="score-pill sp-mid">7.8</span></td>
+        <td class="right"><span class="score-pill sp-mid">7.9</span></td>
         <td class="right"><span class="score-pill sp-high">8.7</span></td>
-        <td class="right"><span class="delta-pos">+1.8 (+26%)</span></td>
+        <td class="right"><span class="delta-pos">+1.8</span></td>
       </tr>
       <tr>
         <td>Reforçadora</td>
         <td class="right"><span class="score-pill sp-mid">6.1</span></td>
-        <td class="right"><span class="score-pill sp-mid">6.8</span></td>
+        <td class="right"><span class="score-pill sp-mid">6.9</span></td>
         <td class="right"><span class="score-pill sp-high">7.7</span></td>
-        <td class="right"><span class="delta-pos">+1.6 (+26%)</span></td>
+        <td class="right"><span class="delta-pos">+1.6</span></td>
       </tr>
       <tr>
         <td>Lida com dúvidas</td>
-        <td class="right"><span class="score-pill sp-bool-v">9/9</span></td>
-        <td class="right"><span class="score-pill sp-bool-v">5/5</span></td>
-        <td class="right"><span class="score-pill sp-bool-m">5/7</span></td>
-        <td class="right"><span class="delta-neg">−29pp</span></td>
+        <td class="right"><span class="score-pill sp-high">10.0</span></td>
+        <td class="right"><span class="score-pill sp-high">10.0</span></td>
+        <td class="right"><span class="score-pill sp-mid">7.1</span></td>
+        <td class="right"><span class="delta-neg">−2.9</span></td>
       </tr>
       <tr>
         <td>Lida c/ situações delicadas</td>
-        <td class="right"><span class="score-pill sp-bool-m">8/9</span></td>
-        <td class="right"><span class="score-pill sp-bool-v">5/5</span></td>
-        <td class="right"><span class="score-pill sp-bool-v">7/7</span></td>
-        <td class="right"><span class="delta-pos">+11pp</span></td>
+        <td class="right"><span class="score-pill sp-mid">8.6</span></td>
+        <td class="right"><span class="score-pill sp-high">10.0</span></td>
+        <td class="right"><span class="score-pill sp-high">10.0</span></td>
+        <td class="right"><span class="delta-pos">+1.4</span></td>
       </tr>
     </tbody>
   </table>
