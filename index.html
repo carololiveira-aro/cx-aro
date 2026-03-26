@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CX & Operações — Aro</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f8fafc; --card: #fff; --border: #e2e8f0;
+    --text: #0f172a; --muted: #475569; --dim: #94a3b8;
+    --green: #16a34a; --green-bg: #f0fdf4; --green-border: #bbf7d0;
+    --orange: #ea580c; --orange-bg: #fff7ed; --orange-border: #fed7aa;
+    --red: #dc2626; --red-bg: #fef2f2;
+    --blue: #2563eb; --blue-bg: #eff6ff; --blue-border: #bfdbfe;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg); color: var(--text);
+    line-height: 1.5; padding: 36px 24px 60px;
+    max-width: 960px; margin: 0 auto;
+  }
+
+  h1 { font-size: 34px; font-weight: 900; letter-spacing: -2px; margin-bottom: 12px; }
+
+  .missao {
+    background: var(--card); border: 1px solid var(--border);
+    border-left: 4px solid var(--blue); border-radius: 0 10px 10px 0;
+    padding: 16px 20px; max-width: 740px; margin-bottom: 40px;
+  }
+  .missao-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--blue); margin-bottom: 4px; }
+  .missao-text { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.55; }
+
+  .section { margin-bottom: 40px; }
+  .section-title {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.6px; color: var(--dim); margin-bottom: 12px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  /* GRID GENÉRICO */
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .g4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
+
+  /* PILAR */
+  .pilar {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px 20px;
+  }
+  .pilar-emoji { font-size: 20px; margin-bottom: 8px; display: block; }
+  .pilar-title { font-size: 14px; font-weight: 800; margin-bottom: 4px; }
+  .pilar-sub { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* STAT */
+  .stat {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px;
+  }
+  .stat-val { font-size: 28px; font-weight: 900; letter-spacing: -1.5px; line-height: 1; color: var(--text); }
+  .stat-val.blue { color: var(--blue); }
+  .stat-val.orange { color: var(--orange); }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 5px; line-height: 1.35; }
+
+  /* KPI */
+  .kpi {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px;
+  }
+  .kpi.bad  { border-top: 3px solid var(--red); }
+  .kpi.warn { border-top: 3px solid var(--orange); }
+  .kpi.neu  { border-top: 3px solid var(--blue); }
+  .kpi-val { font-size: 26px; font-weight: 900; letter-spacing: -1.2px; line-height: 1; }
+  .kpi.bad  .kpi-val { color: var(--red); }
+  .kpi.warn .kpi-val { color: var(--orange); }
+  .kpi.neu  .kpi-val { color: var(--blue); }
+  .kpi-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; margin-top: 5px; }
+  .kpi-foot {
+    margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border);
+    font-size: 11px; display: flex; gap: 6px; align-items: center;
+  }
+
+  /* BADGE */
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+  }
+  .b-red    { background: var(--red-bg);    color: var(--red); }
+  .b-orange { background: var(--orange-bg); color: var(--orange); }
+  .b-blue   { background: var(--blue-bg);   color: var(--blue); }
+  .b-green  { background: var(--green-bg);  color: var(--green); }
+  .b-gray   { background: #f1f5f9;           color: var(--muted); }
+
+  /* ENTREGA */
+  .entrega {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .entrega-icon {
+    width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+    background: var(--green-bg); border: 1px solid var(--green-border);
+    display: flex; align-items: center; justify-content: center; font-size: 16px;
+  }
+  .entrega-title { font-size: 13px; font-weight: 800; margin-bottom: 3px; }
+  .entrega-desc  { font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .entrega-meta  { font-size: 11px; color: var(--dim); margin-top: 4px; }
+
+  /* VNC ANÁLISE */
+  .vnc-header {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 18px; margin-bottom: 10px;
+    font-size: 12px; color: var(--muted); line-height: 1.5;
+  }
+  .vnc-header strong { color: var(--text); }
+  .score-table {
+    width: 100%; border-collapse: collapse;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden; margin-bottom: 10px;
+    font-size: 13px;
+  }
+  .score-table th {
+    background: var(--bg); padding: 10px 14px; text-align: left;
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.4px; color: var(--dim); border-bottom: 1px solid var(--border);
+  }
+  .score-table th.right, .score-table td.right { text-align: right; }
+  .score-table td {
+    padding: 10px 14px; border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+  .score-table tr:last-child td { border-bottom: none; }
+  .score-table tr:hover td { background: #fafbfc; }
+  .score-pill {
+    display: inline-block; padding: 2px 8px; border-radius: 6px;
+    font-size: 12px; font-weight: 700; min-width: 36px; text-align: center;
+  }
+  .sp-low  { background: #fef2f2; color: var(--red); }
+  .sp-mid  { background: #fff7ed; color: var(--orange); }
+  .sp-high { background: #f0fdf4; color: var(--green); }
+  .sp-bool-v { background: #f0fdf4; color: var(--green); font-size: 11px; }
+  .sp-bool-m { background: #fef2f2; color: var(--red); font-size: 11px; }
+  .delta-pos { color: var(--green); font-weight: 700; font-size: 12px; }
+  .delta-neg { color: var(--red); font-weight: 700; font-size: 12px; }
+  .melhoria-list { display: flex; flex-direction: column; gap: 8px; }
+  .melhoria-item {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 16px;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .melhoria-item.pendente { border-left: 3px solid var(--orange); }
+  .melhoria-item.feito    { border-left: 3px solid var(--green); }
+  .melhoria-num {
+    font-size: 11px; font-weight: 800; color: var(--dim);
+    min-width: 20px; padding-top: 1px;
+  }
+  .melhoria-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .melhoria-desc  { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+  /* WENDY EVOLUÇÃO */
+  .wendy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .wendy-item {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .wendy-item.done  { border-left: 3px solid var(--green); }
+  .wendy-item.soon  { border-left: 3px solid var(--blue); }
+  .wendy-dot {
+    width: 28px; height: 28px; border-radius: 7px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 14px;
+  }
+  .wendy-dot.done { background: var(--green-bg); }
+  .wendy-dot.soon { background: var(--blue-bg); }
+  .wendy-title { font-size: 13px; font-weight: 800; margin-bottom: 3px; }
+  .wendy-desc  { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+  /* ROAD */
+  .road {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px;
+  }
+  .road.p1 { border-top: 3px solid var(--red); }
+  .road.p2 { border-top: 3px solid var(--orange); }
+  .road.p4 { border-top: 3px solid var(--blue); }
+  .road.p5 { border-top: 3px solid var(--green); }
+  .road-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+  .road-title { font-size: 13px; font-weight: 800; }
+  .road-desc  { font-size: 12px; color: var(--muted); line-height: 1.4; margin-bottom: 8px; }
+  .road-meta  { font-size: 11px; color: var(--dim); padding-top: 8px; border-top: 1px solid var(--border); }
+
+  /* CANAL BAR */
+  .canal {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px; margin-top: 10px;
+  }
+  .canal-label { font-size: 12px; font-weight: 700; margin-bottom: 10px; }
+  .bar-wrap { height: 14px; border-radius: 7px; overflow: hidden; background: var(--bg); display: flex; margin-bottom: 8px; }
+  .bar-app  { width: 96%; background: var(--blue); }
+  .bar-meta { width: 4%;  background: var(--dim); }
+  .canal-leg { display: flex; gap: 20px; font-size: 12px; }
+  .leg { display: flex; align-items: center; gap: 5px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--orange-bg); border: 1px solid var(--orange-border);
+    border-radius: 8px; padding: 12px 14px; margin-top: 10px;
+    font-size: 12px; color: var(--text); line-height: 1.5;
+    display: flex; gap: 8px; align-items: flex-start;
+  }
+</style>
+</head>
+<body>
+
+<h1>CX & Operações</h1>
+<div class="missao">
+  <div class="missao-label">Missão</div>
+  <div class="missao-text">Garantir que cada cliente no app sinta que tem um parceiro de verdade — que entende o contexto, resolve de verdade e acompanha a jornada. Não estamos aqui pra vender produto. Estamos aqui pra resolver o problema dele.</div>
+</div>
+
+
+<!-- MAPA DA ÁREA -->
+<div class="section">
+  <div class="section-title">Mapa da área — 4 pilares</div>
+  <div class="g2">
+    <div class="pilar">
+      <span class="pilar-emoji">📞</span>
+      <div class="pilar-title">Atendimento ao Cliente</div>
+      <div class="pilar-sub">Nenhum cliente fica sem resposta. Quando a Wendy não resolve, a equipe assume com agilidade e acompanha até a resolução.</div>
+    </div>
+    <div class="pilar">
+      <span class="pilar-emoji">🗺️</span>
+      <div class="pilar-title">Mapeamento de Fluxos</div>
+      <div class="pilar-sub">Mapear onde os fluxos quebram e o cliente se frustra. CX define o "o quê", Produto constrói.</div>
+    </div>
+    <div class="pilar">
+      <span class="pilar-emoji">📊</span>
+      <div class="pilar-title">Métricas de Qualidade</div>
+      <div class="pilar-sub">FCR, FRT, CSAT e Containment Rate. Dashboard ativo desde março/2026. Dados virando ação.</div>
+    </div>
+    <div class="pilar">
+      <span class="pilar-emoji">🤖</span>
+      <div class="pilar-title">Evolução da Wendy</div>
+      <div class="pilar-sub">Identificar onde a Wendy falha e priorizar automações que reduzem fricção para o cliente e carga para o time.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- SITUAÇÃO ATUAL -->
+<div class="section">
+  <div class="section-title">Situação atual — últimos 3 meses (dez/25–mar/26)</div>
+  <div class="g4">
+    <div class="stat">
+      <div class="stat-val">30,5K</div>
+      <div class="stat-label">Conversas atendidas</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val blue">96%</div>
+      <div class="stat-label">Via app (4% legado Meta)</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val orange">37%</div>
+      <div class="stat-label">Precisaram de humano</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">9×</div>
+      <div class="stat-label">Crescimento de volume (set/25→mar/26)</div>
+    </div>
+  </div>
+  <div class="canal">
+    <div class="canal-label">Canal — 30.454 conversas</div>
+    <div class="bar-wrap"><div class="bar-app"></div><div class="bar-meta"></div></div>
+    <div class="canal-leg">
+      <div class="leg"><div class="dot" style="background:var(--blue)"></div><span><strong>96%</strong> app mobile — 29.285</span></div>
+      <div class="leg"><div class="dot" style="background:var(--dim)"></div><span><strong>4%</strong> Meta legado — 1.169</span></div>
+    </div>
+  </div>
+  <div class="callout">
+    <span style="flex-shrink:0">⚠️</span>
+    <span>Volume cresceu 9× em 6 meses. FRT e FCR estão pressionados pelo crescimento — não por falta de qualidade. A solução é automação, não headcount.</span>
+  </div>
+</div>
+
+
+<!-- MÉTRICAS -->
+<div class="section">
+  <div class="section-title">O que já medimos — baseline março/2026</div>
+  <div class="g4">
+    <div class="kpi warn">
+      <div class="kpi-val">63,9%</div>
+      <div class="kpi-label">FCR — 1º Contato</div>
+      <div class="kpi-foot"><span class="badge b-orange">Abaixo</span><span style="color:var(--dim)">Meta ≥ 75%</span></div>
+    </div>
+    <div class="kpi bad">
+      <div class="kpi-val">15,4<span style="font-size:14px;font-weight:600"> min</span></div>
+      <div class="kpi-label">FRT mediana</div>
+      <div class="kpi-foot"><span class="badge b-red">Crítico</span><span style="color:var(--dim)">Meta &lt; 5 min</span></div>
+    </div>
+    <div class="kpi bad">
+      <div class="kpi-val">25,8%</div>
+      <div class="kpi-label">Resp. em até 5 min</div>
+      <div class="kpi-foot"><span class="badge b-red">Crítico</span><span style="color:var(--dim)">Meta ≥ 70%</span></div>
+    </div>
+    <div class="kpi neu">
+      <div class="kpi-val">—</div>
+      <div class="kpi-label">CSAT</div>
+      <div class="kpi-foot"><span class="badge b-blue">Abr/2026</span></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- JÁ ENTREGAMOS -->
+<div class="section">
+  <div class="section-title">O que já entregamos</div>
+  <div class="g2">
+    <div class="entrega">
+      <div class="entrega-icon">📊</div>
+      <div>
+        <div class="entrega-title">Dashboard de métricas CX</div>
+        <div class="entrega-desc">FCR, FRT e volume monitorados em tempo real. Primeiro dashboard de CX da Aro.</div>
+        <div class="entrega-meta">Março/2026 · Ativo</div>
+      </div>
+    </div>
+    <div class="entrega">
+      <div class="entrega-icon">🔍</div>
+      <div>
+        <div class="entrega-title">Análise de 27.547 conversas</div>
+        <div class="entrega-desc">Mapeamos todos os motivos de contato e identificamos os gaps que geram 37% das escalações. <a href="https://is.gd/7bj7JV" target="_blank" style="color:var(--blue)">Ver análise →</a></div>
+        <div class="entrega-meta">Março/2026</div>
+      </div>
+    </div>
+    <div class="entrega">
+      <div class="entrega-icon">📋</div>
+      <div>
+        <div class="entrega-title">Priorização dos top-5 gaps</div>
+        <div class="entrega-desc">Quitação, renegociação, parcela, empréstimo recorrente e dados bancários — ranqueados por impacto e specs entregues ao Produto.</div>
+        <div class="entrega-meta">Março/2026</div>
+      </div>
+    </div>
+    <div class="entrega">
+      <div class="entrega-icon">🗺️</div>
+      <div>
+        <div class="entrega-title">Mapa da área CX</div>
+        <div class="entrega-desc">Documentação dos 4 pilares, objetivos, métricas e roadmap — base para alinhamento do time.</div>
+        <div class="entrega-meta">Março/2026 · Este documento</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ANÁLISE VNC -->
+<div class="section">
+  <div class="section-title">Qualidade conversacional do VnC — evolução jan → mar/2026</div>
+
+  <div class="vnc-header">
+    Análise de <strong>21 conversas lidas integralmente</strong> (9 jan · 5 fev · 7 mar), todas de clientes que finalizaram o protocolo e receberam o empréstimo. Avaliação por 7 dimensões da rubrica de CX.
+  </div>
+
+  <table class="score-table">
+    <thead>
+      <tr>
+        <th>Dimensão</th>
+        <th class="right">Jan (n=9)</th>
+        <th class="right">Fev (n=5)</th>
+        <th class="right">Mar (n=7)</th>
+        <th class="right">Δ Jan→Mar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Atendimento geral</td>
+        <td class="right"><span class="score-pill sp-mid">6.4</span></td>
+        <td class="right"><span class="score-pill sp-mid">7.6</span></td>
+        <td class="right"><span class="score-pill sp-high">8.4</span></td>
+        <td class="right"><span class="delta-pos">+2.0 (+31%)</span></td>
+      </tr>
+      <tr>
+        <td>Clareza</td>
+        <td class="right"><span class="score-pill sp-mid">6.6</span></td>
+        <td class="right"><span class="score-pill sp-mid">7.4</span></td>
+        <td class="right"><span class="score-pill sp-high">8.1</span></td>
+        <td class="right"><span class="delta-pos">+1.5 (+23%)</span></td>
+      </tr>
+      <tr>
+        <td>Fluidez</td>
+        <td class="right"><span class="score-pill sp-mid">5.8</span></td>
+        <td class="right"><span class="score-pill sp-mid">6.6</span></td>
+        <td class="right"><span class="score-pill sp-high">8.0</span></td>
+        <td class="right"><span class="delta-pos">+2.2 (+38%)</span></td>
+      </tr>
+      <tr>
+        <td>Acolhedora</td>
+        <td class="right"><span class="score-pill sp-mid">6.9</span></td>
+        <td class="right"><span class="score-pill sp-mid">7.8</span></td>
+        <td class="right"><span class="score-pill sp-high">8.7</span></td>
+        <td class="right"><span class="delta-pos">+1.8 (+26%)</span></td>
+      </tr>
+      <tr>
+        <td>Reforçadora</td>
+        <td class="right"><span class="score-pill sp-mid">6.1</span></td>
+        <td class="right"><span class="score-pill sp-mid">6.8</span></td>
+        <td class="right"><span class="score-pill sp-high">7.7</span></td>
+        <td class="right"><span class="delta-pos">+1.6 (+26%)</span></td>
+      </tr>
+      <tr>
+        <td>Lida com dúvidas</td>
+        <td class="right"><span class="score-pill sp-bool-v">9/9</span></td>
+        <td class="right"><span class="score-pill sp-bool-v">5/5</span></td>
+        <td class="right"><span class="score-pill sp-bool-m">5/7</span></td>
+        <td class="right"><span class="delta-neg">−29pp</span></td>
+      </tr>
+      <tr>
+        <td>Lida c/ situações delicadas</td>
+        <td class="right"><span class="score-pill sp-bool-m">8/9</span></td>
+        <td class="right"><span class="score-pill sp-bool-v">5/5</span></td>
+        <td class="right"><span class="score-pill sp-bool-v">7/7</span></td>
+        <td class="right"><span class="delta-pos">+11pp</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="g2" style="margin-bottom:0">
+    <div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--dim);margin-bottom:8px;">O que ainda precisa melhorar</div>
+      <div class="melhoria-list">
+        <div class="melhoria-item pendente">
+          <div class="melhoria-num">1</div>
+          <div>
+            <div class="melhoria-title">Falta de contexto durante o protocolo</div>
+            <div class="melhoria-desc">A Wendy não retém o contexto da conversa ao longo do VnC, fazendo o cliente repetir informações que já deu.</div>
+          </div>
+        </div>
+        <div class="melhoria-item pendente">
+          <div class="melhoria-num">2</div>
+          <div>
+            <div class="melhoria-title">Pergunta de dificuldades fora de contexto</div>
+            <div class="melhoria-desc">Aplicada mesmo quando cliente declarou não ter dificuldades financeiras. Parece roteiro mecânico.</div>
+          </div>
+        </div>
+        <div class="melhoria-item pendente">
+          <div class="melhoria-num">3</div>
+          <div>
+            <div class="melhoria-title">Perguntas do cliente ignoradas</div>
+            <div class="melhoria-desc">"Se eu adiantar as parcelas tenho desconto?" — não respondida. Wendy segue o roteiro sem ouvir.</div>
+          </div>
+        </div>
+        <div class="melhoria-item pendente">
+          <div class="melhoria-num">4</div>
+          <div>
+            <div class="melhoria-title">Gestão de expectativa de valor</div>
+            <div class="melhoria-desc">Cliente pediu R$20k e foi aprovada em R$200 sem nenhum alinhamento prévio durante a entrevista.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--dim);margin-bottom:8px;">O que melhorou</div>
+      <div class="melhoria-list">
+        <div class="melhoria-item feito">
+          <div class="melhoria-num">✓</div>
+          <div>
+            <div class="melhoria-title">Abertura centrada no cliente</div>
+            <div class="melhoria-desc">De "nosso jeito é diferente" (jan) para "uma oportunidade que combine com você" (mar).</div>
+          </div>
+        </div>
+        <div class="melhoria-item feito">
+          <div class="melhoria-num">✓</div>
+          <div>
+            <div class="melhoria-title">Alinhamento de expectativa de espera</div>
+            <div class="melhoria-desc">Em jan, cliente não sabia quando receberia resposta. Em mar, Wendy informa proativamente "em cerca de 3 horas" ou "só segunda às 9h".</div>
+          </div>
+        </div>
+        <div class="melhoria-item feito">
+          <div class="melhoria-num">✓</div>
+          <div>
+            <div class="melhoria-title">Tempo de aprovação: horas → &lt; 1 min</div>
+            <div class="melhoria-desc">Maior ganho do período. Em jan podia levar dias. Em mar, aprovação em menos de 1 minuto na maioria dos casos.</div>
+          </div>
+        </div>
+        <div class="melhoria-item feito">
+          <div class="melhoria-num">✓</div>
+          <div>
+            <div class="melhoria-title">Situações delicadas: 89% → 100%</div>
+            <div class="melhoria-desc">Luto, dificuldade financeira extrema, dor física, transtorno emocional — todos tratados com empatia em fev e mar.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- EVOLUÇÃO DA WENDY -->
+<div class="section">
+  <div class="section-title">Evolução da Wendy — últimos 3 meses</div>
+  <div class="wendy-grid">
+
+    <div class="wendy-item done">
+      <div class="wendy-dot done">✅</div>
+      <div>
+        <div class="wendy-title">Oferta automática de crédito</div>
+        <div class="wendy-desc">A oferta deixou de ser gerada manualmente. Hoje é calculada e enviada automaticamente com base na classificação de risco do cliente.</div>
+      </div>
+    </div>
+
+    <div class="wendy-item done">
+      <div class="wendy-dot done">✅</div>
+      <div>
+        <div class="wendy-title">Biometria no início do protocolo</div>
+        <div class="wendy-desc">Validação de identidade via biometria (Unico) desde o início do VnC. Eliminamos a conferência manual de documentos — mais seguro e mais rápido.</div>
+      </div>
+    </div>
+
+    <div class="wendy-item done">
+      <div class="wendy-dot done">✅</div>
+      <div>
+        <div class="wendy-title">Aviso de equipe offline no VnC</div>
+        <div class="wendy-desc">Quando o cliente inicia o VnC fora do horário de atendimento, a Wendy avisa que não finalizaremos naquele momento. Reduz abandono e frustrações.</div>
+      </div>
+    </div>
+
+    <div class="wendy-item soon">
+      <div class="wendy-dot soon">🔜</div>
+      <div>
+        <div class="wendy-title">CSAT — pesquisa de satisfação</div>
+        <div class="wendy-desc">Pesquisa 1–5 disparada após interações chave. Primeiro dado direto de percepção do cliente.</div>
+      </div>
+    </div>
+
+    <div class="wendy-item soon">
+      <div class="wendy-dot soon">🔜</div>
+      <div>
+        <div class="wendy-title">Aviso de equipe offline em qualquer etapa</div>
+        <div class="wendy-desc">Expandir o aviso de offline para qualquer momento do processo — não só no VnC. Cliente saberá quando não há atendimento disponível antes de se frustrar.</div>
+      </div>
+    </div>
+
+    <div class="wendy-item soon">
+      <div class="wendy-dot soon">🔜</div>
+      <div>
+        <div class="wendy-title">Automação de clientes negados</div>
+        <div class="wendy-desc">Hoje o fluxo pós-negação é manual. Será automatizado na Wendy — cliente recebe orientação e próximos passos sem precisar de atendente.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ROADMAP -->
+<div class="section">
+  <div class="section-title">
+    O que estamos construindo
+    <a href="https://docs.google.com/spreadsheets/d/1cXdrVh7qbPzwTbm5C9aDOR4TFFTRhmcc1M9_5Dg7ZD0/edit?gid=353010178#gid=353010178" target="_blank" style="font-size:11px;font-weight:700;color:var(--blue);text-decoration:none;text-transform:none;letter-spacing:0;">📋 Ver roadmap completo →</a>
+  </div>
+  <div class="g2">
+    <div class="road p1">
+      <div class="road-head">
+        <div class="road-title">Automação: Quitação antecipada</div>
+        <span class="badge b-red">P1</span>
+      </div>
+      <div class="road-desc">Fluxo na Wendy para calcular e informar saldo de quitação. Maior gap absoluto.</div>
+      <div class="road-meta">Carol → Produto · ~2.570 casos/trim</div>
+    </div>
+    <div class="road p1">
+      <div class="road-head">
+        <div class="road-title">Automação: Renegociação / acordo</div>
+        <span class="badge b-red">P2</span>
+      </div>
+      <div class="road-desc">Cliente em atraso renegocia pelo app, integrado com Collections.</div>
+      <div class="road-meta">Carol + Collections · ~1.320 casos/trim</div>
+    </div>
+    <div class="road p2">
+      <div class="road-head">
+        <div class="road-title">Automação: Pagamento de parcela</div>
+        <span class="badge b-orange">P3</span>
+      </div>
+      <div class="road-desc">Segunda via, vencimento e confirmação de pagamento sem humano.</div>
+      <div class="road-meta">Carol → Produto · ~827 casos/trim</div>
+    </div>
+    <div class="road p2">
+      <div class="road-head">
+        <div class="road-title">Automação: Empréstimo recorrente</div>
+        <span class="badge b-orange">P4</span>
+      </div>
+      <div class="road-desc">Cliente quer renovar — Wendy não tem fluxo. 96% dependência humana.</div>
+      <div class="road-meta">Carol → Produto · ~412 casos/trim</div>
+    </div>
+    <div class="road p4">
+      <div class="road-head">
+        <div class="road-title">CSAT — lançamento</div>
+        <span class="badge b-blue">Abr/2026</span>
+      </div>
+      <div class="road-desc">Pesquisa pós-atendimento. Primeiro dado de percepção do cliente. Carol define, Rodrigo implementa.</div>
+      <div class="road-meta">Previsão: abril/2026</div>
+    </div>
+    <div class="road p5">
+      <div class="road-head">
+        <div class="road-title">QA Agent</div>
+        <span class="badge b-gray">Em spec</span>
+      </div>
+      <div class="road-desc">Auditar conversas da Wendy automaticamente. Substitui revisão manual. Carol + Mel definem, Rodrigo constrói.</div>
+      <div class="road-meta">Carol + Mel → Rodrigo</div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;padding:8px 0 0;font-size:11px;color:var(--dim);">
+  Aro · CX & Operações · Março 2026 · Carol Oliveira
+</div>
+
+</body>
+</html>
